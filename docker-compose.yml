@@ -1,0 +1,22 @@
+services:
+  gatehouse-gateway:
+    build: .
+    image: gatehouse:latest
+    container_name: gatehouse-gateway
+    ports:
+      - "8000:8000"
+    environment:
+      - UPSTREAM_MODE=${UPSTREAM_MODE:-mock}
+      - UPSTREAM_BASE_URL=${UPSTREAM_BASE_URL:-https://api.openai.com/v1}
+      - UPSTREAM_API_KEY=${UPSTREAM_API_KEY:-}
+      - ADMIN_API_KEY=${ADMIN_API_KEY:-changeme-admin-key}
+      - DB_PATH=/data/gatehouse.db
+      - RATE_LIMIT_RPM=${RATE_LIMIT_RPM:-60}
+      - RATE_LIMIT_BURST=${RATE_LIMIT_BURST:-10}
+      - INJECTION_POLICY=${INJECTION_POLICY:-block}
+    volumes:
+      - gatehouse-data:/data
+    restart: unless-stopped
+
+volumes:
+  gatehouse-data:
