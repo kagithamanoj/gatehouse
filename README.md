@@ -1,5 +1,7 @@
 # Gatehouse
 
+![CI](https://github.com/kagithamanoj/gatehouse/actions/workflows/ci.yml/badge.svg)
+
 A production-style AI gateway that sits in front of any OpenAI-compatible LLM and enforces the guardrails teams usually skip: API key auth, per-key rate limits, PII redaction on prompts and completions, prompt-injection screening, a full audit trail, and per-key cost tracking. One deploy, one endpoint, no SDK changes for callers.
 
 ## The problem
@@ -15,6 +17,8 @@ Most teams plug an LLM straight into their app. That direct integration ships wi
 7. No cost visibility per consumer, so nobody owns the bill.
 
 Gatehouse closes all seven in a single deploy. Clients keep calling an OpenAI-compatible `/v1/chat/completions` endpoint. Everything else happens inside the gateway.
+
+These are not theoretical risks. The OWASP Top 10 for LLM Applications (2025 edition) ranks Prompt Injection as LLM01, the number one risk, Sensitive Information Disclosure as LLM02, and Unbounded Consumption as LLM10. Gatehouse is built to answer all three directly: injection screening at the edge, PII redaction on both prompts and completions, and per-key rate limits with cost attribution.
 
 ## Architecture
 
